@@ -1,3 +1,4 @@
+      
 #!/usr/bin/env python3
 """
 小红书卡片渲染脚本 - 增强版
@@ -63,7 +64,8 @@ AVAILABLE_THEMES = [
     'professional',
     'retro',
     'terminal',
-    'sketch'
+    'sketch',
+    'cyberpunk'
 ]
 
 # 分页模式
@@ -143,11 +145,10 @@ def load_theme_css(theme: str) -> str:
 
 
 def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> str:
-    """生成封面 HTML"""
+    """生成封面 HTML - 重构版：更紧凑、更有视觉冲击力"""
     emoji = metadata.get('emoji', '📝')
     title = metadata.get('title', '标题')
     subtitle = metadata.get('subtitle', '')
-    
     
     # 动态调整标题字体大小
     title_len = len(title)
@@ -171,7 +172,8 @@ def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> 
         'professional': 'linear-gradient(180deg, #2563EB 0%, #3B82F6 100%)',
         'retro': 'linear-gradient(180deg, #D35400 0%, #F39C12 100%)',
         'terminal': 'linear-gradient(180deg, #0D1117 0%, #21262D 100%)',
-        'sketch': 'linear-gradient(180deg, #555555 0%, #999999 100%)'
+        'sketch': 'linear-gradient(180deg, #555555 0%, #999999 100%)',
+        'cyberpunk': 'linear-gradient(180deg, #0A0A1A 0%, #1A0A2E 100%)',
     }
     bg = theme_backgrounds.get(theme, theme_backgrounds['default'])
 
@@ -185,8 +187,53 @@ def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> 
         'retro': 'linear-gradient(180deg, #8B4513 0%, #D35400 100%)',
         'terminal': 'linear-gradient(180deg, #39D353 0%, #58A6FF 100%)',
         'sketch': 'linear-gradient(180deg, #111827 0%, #6B7280 100%)',
+        'cyberpunk': 'linear-gradient(180deg, #00F0FF 0%, #B347D9 100%)',
     }
     title_bg = title_gradients.get(theme, title_gradients['default'])
+
+    # 副标题颜色随主题变化
+    subtitle_colors = {
+        'default': '#6B7280',
+        'playful-geometric': '#A78BFA',
+        'neo-brutalism': '#FECA57',
+        'botanical': '#D1FAE5',
+        'professional': '#93C5FD',
+        'retro': '#FDE68A',
+        'terminal': '#8B949E',
+        'sketch': '#9CA3AF',
+        'cyberpunk': '#FF00E5',
+    }
+    subtitle_color = subtitle_colors.get(theme, '#6B7280')
+
+    # 分隔线颜色
+    divider_colors = {
+        'default': '#E5E7EB',
+        'playful-geometric': 'linear-gradient(90deg, #8B5CF6, #F472B6)',
+        'neo-brutalism': 'linear-gradient(90deg, #FF4757, #FECA57)',
+        'botanical': 'linear-gradient(90deg, #4A7C59, #8FBC8F)',
+        'professional': 'linear-gradient(90deg, #1D4ED8, #3B82F6)',
+        'retro': 'linear-gradient(90deg, #D35400, #F39C12)',
+        'terminal': 'linear-gradient(90deg, #238636, #58A6FF)',
+        'sketch': 'linear-gradient(90deg, #374151, #9CA3AF)',
+        'cyberpunk': 'linear-gradient(90deg, #00F0FF, #B347D9, #FF00E5)',
+    }
+    divider_bg = divider_colors.get(theme, '#E5E7EB')
+
+    # 是否是深色主题（影响封面卡片背景和文字色）
+    dark_themes = {'terminal', 'cyberpunk'}
+    is_dark = theme in dark_themes
+
+    if is_dark:
+        card_bg = 'rgba(20, 20, 35, 0.95)'
+        subtitle_color = subtitle_colors.get(theme, '#8B949E')
+    else:
+        card_bg = '#FFFFFF'
+
+    # 内部卡片尺寸更紧凑：95%×93%
+    inner_w = int(width * 0.95)
+    inner_h = int(height * 0.93)
+    inner_left = int((width - inner_w) / 2)
+    inner_top = int((height - inner_h) / 2)
     
     html = f'''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -217,54 +264,121 @@ def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> 
             position: relative;
             overflow: hidden;
         }}
-        
+
+        /* 装饰性圆圈 - 左上角 */
+        .deco-circle-1 {{
+            position: absolute;
+            width: {int(width * 0.35)}px;
+            height: {int(width * 0.35)}px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            top: -{int(width * 0.12)}px;
+            right: -{int(width * 0.08)}px;
+        }}
+
+        /* 装饰性圆圈 - 右下角 */
+        .deco-circle-2 {{
+            position: absolute;
+            width: {int(width * 0.25)}px;
+            height: {int(width * 0.25)}px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            bottom: -{int(width * 0.06)}px;
+            left: -{int(width * 0.05)}px;
+        }}
+
+        /* 装饰性小圆点 */
+        .deco-dots {{
+            position: absolute;
+            bottom: {int(height * 0.08)}px;
+            right: {int(width * 0.08)}px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            opacity: 0.3;
+        }}
+        .deco-dot {{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+        }}
+
         .cover-inner {{
             position: absolute;
-            width: {int(width * 0.88)}px;
-            height: {int(height * 0.91)}px;
-            left: {int(width * 0.06)}px;
-            top: {int(height * 0.045)}px;
-            background: #F3F3F3;
-            border-radius: 25px;
+            width: {inner_w}px;
+            height: {inner_h}px;
+            left: {inner_left}px;
+            top: {inner_top}px;
+            background: {card_bg};
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
-            padding: {int(width * 0.074)}px {int(width * 0.079)}px;
+            justify-content: center;
+            align-items: center;
+            padding: {int(height * 0.08)}px {int(width * 0.08)}px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }}
         
         .cover-emoji {{
-            font-size: {int(width * 0.167)}px;
+            font-size: {int(width * 0.19)}px;
             line-height: 1.2;
-            margin-bottom: {int(height * 0.035)}px;
+            margin-bottom: {int(height * 0.04)}px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
         }}
         
         .cover-title {{
             font-weight: 900;
             font-size: {title_size}px;
-            line-height: 1.4;
+            line-height: 1.35;
             background: {title_bg};
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            flex: 1;
-            display: flex;
-            align-items: flex-start;
-            word-break: break-all;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            padding: 0 {int(width * 0.02)}px;
+        }}
+
+        .cover-divider {{
+            width: {int(width * 0.15)}px;
+            height: 4px;
+            background: {divider_bg};
+            border-radius: 2px;
+            margin: {int(height * 0.04)}px 0;
         }}
         
         .cover-subtitle {{
-            font-weight: 350;
-            font-size: {int(width * 0.067)}px;
-            line-height: 1.4;
-            color: #000000;
-            margin-top: auto;
+            font-weight: 400;
+            font-size: {int(width * 0.052)}px;
+            line-height: 1.5;
+            color: {subtitle_color};
+            max-width: 90%;
+            letter-spacing: 1px;
         }}
     </style>
 </head>
 <body>
     <div class="cover-container">
+        <div class="deco-circle-1"></div>
+        <div class="deco-circle-2"></div>
+        <div class="deco-dots">
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+        </div>
         <div class="cover-inner">
             <div class="cover-emoji">{emoji}</div>
             <div class="cover-title">{title}</div>
+            <div class="cover-divider"></div>
             <div class="cover-subtitle">{subtitle}</div>
         </div>
     </div>
@@ -292,9 +406,19 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
         'professional': 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)',
         'retro': 'linear-gradient(135deg, #D35400 0%, #F39C12 100%)',
         'terminal': 'linear-gradient(135deg, #0D1117 0%, #161B22 100%)',
-        'sketch': 'linear-gradient(135deg, #555555 0%, #888888 100%)'
+        'sketch': 'linear-gradient(135deg, #555555 0%, #888888 100%)',
+        'cyberpunk': 'linear-gradient(180deg, #0A0A1A 0%, #1A0A2E 50%, #0A0A1A 100%)'
     }
     bg = theme_backgrounds.get(theme, theme_backgrounds['default'])
+
+    # 是否是深色主题（影响卡片背景和文字色）
+    dark_themes = {'terminal', 'cyberpunk'}
+    is_dark = theme in dark_themes
+
+    if is_dark:
+        card_inner_bg = 'rgba(20, 20, 35, 0.95)'
+    else:
+        card_inner_bg = 'rgba(255, 255, 255, 0.95)'
     
     # 根据模式设置不同的容器样式
     if mode == 'auto-fit':
@@ -307,7 +431,7 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
             overflow: hidden;
         '''
         inner_style = f'''
-            background: rgba(255, 255, 255, 0.95);
+            background: {card_inner_bg};
             border-radius: 20px;
             padding: 60px;
             height: calc({height}px - 100px);
@@ -329,8 +453,8 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
             position: relative;
             padding: 50px;
         '''
-        inner_style = '''
-            background: rgba(255, 255, 255, 0.95);
+        inner_style = f'''
+            background: {card_inner_bg};
             border-radius: 20px;
             padding: 60px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -347,7 +471,7 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
             overflow: hidden;
         '''
         inner_style = f'''
-            background: rgba(255, 255, 255, 0.95);
+            background: {card_inner_bg};
             border-radius: 20px;
             padding: 60px;
             min-height: calc({height}px - 100px);
@@ -649,6 +773,7 @@ def main():
   retro             - 复古怀旧风格
   terminal          - 终端/命令行风格
   sketch            - 手绘素描风格
+  cyberpunk         - 赛博朋克/科技未来风格
 
 分页模式:
   separator   - 按 --- 分隔符手动分页（默认）

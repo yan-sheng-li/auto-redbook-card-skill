@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1080, height=1440">
     <title>小红书封面</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Noto Sans SC', 'Source Han Sans CN', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             width: 1080px;
             height: 1440px;
             overflow: hidden;
         }
-        
+
         .cover-container {
             width: 1080px;
             height: 1440px;
@@ -27,57 +28,126 @@
             position: relative;
             overflow: hidden;
         }
-        
+
+        /* 装饰性圆圈 - 右上角 */
+        .deco-circle-1 {
+            position: absolute;
+            width: 378px;
+            height: 378px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            top: -130px;
+            right: -86px;
+        }
+
+        /* 装饰性圆圈 - 左下角 */
+        .deco-circle-2 {
+            position: absolute;
+            width: 270px;
+            height: 270px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            bottom: -65px;
+            left: -54px;
+        }
+
+        /* 装饰性小圆点 */
+        .deco-dots {
+            position: absolute;
+            bottom: 115px;
+            right: 86px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            opacity: 0.3;
+        }
+
+        .deco-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
         .cover-inner {
             position: absolute;
-            width: 950px;
-            height: 1310px;
-            left: 65px;
-            top: 65px;
-            background: #F3F3F3;
-            border-radius: 25px;
+            width: 1026px;
+            height: 1339px;
+            left: 27px;
+            top: 50px;
+            background: #FFFFFF;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
-            padding: 80px 85px;
+            justify-content: center;
+            align-items: center;
+            padding: 115px 86px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
-        
+
         .cover-emoji {
-            font-size: 180px;
+            font-size: 205px;
             line-height: 1.2;
-            margin-bottom: 50px;
+            margin-bottom: 58px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
         }
-        
+
         .cover-title {
             font-weight: 900;
             font-size: 130px;
-            line-height: 1.4;
+            line-height: 1.35;
             background: linear-gradient(180deg, #111827 0%, #4B5563 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            flex: 1;
-            display: flex;
-            align-items: flex-start;
-            word-break: normal;
+            word-break: break-word;
             overflow-wrap: break-word;
+            max-width: 100%;
+            padding: 0 22px;
         }
-        
+
+        .cover-divider {
+            width: 162px;
+            height: 4px;
+            background: #E5E7EB;
+            border-radius: 2px;
+            margin: 58px 0;
+        }
+
         .cover-subtitle {
-            font-weight: 350;
-            font-size: 72px;
-            line-height: 1.4;
-            color: #000000;
-            margin-top: auto;
+            font-weight: 400;
+            font-size: 56px;
+            line-height: 1.5;
+            color: #6B7280;
+            max-width: 90%;
+            letter-spacing: 1px;
         }
     </style>
 </head>
+
 <body>
     <div class="cover-container">
+        <div class="deco-circle-1"></div>
+        <div class="deco-circle-2"></div>
+        <div class="deco-dots">
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+            <div class="deco-dot"></div>
+        </div>
         <div class="cover-inner">
             <div class="cover-emoji">{{EMOJI}}</div>
             <div class="cover-title">{{TITLE}}</div>
+            <div class="cover-divider"></div>
             <div class="cover-subtitle">{{SUBTITLE}}</div>
         </div>
     </div>
 </body>
+
 </html>
