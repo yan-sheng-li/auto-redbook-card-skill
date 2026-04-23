@@ -410,6 +410,15 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
         'cyberpunk': 'linear-gradient(180deg, #0A0A1A 0%, #1A0A2E 50%, #0A0A1A 100%)'
     }
     bg = theme_backgrounds.get(theme, theme_backgrounds['default'])
+
+    # 是否是深色主题（影响卡片背景和文字色）
+    dark_themes = {'terminal', 'cyberpunk'}
+    is_dark = theme in dark_themes
+
+    if is_dark:
+        card_inner_bg = 'rgba(20, 20, 35, 0.95)'
+    else:
+        card_inner_bg = 'rgba(255, 255, 255, 0.95)'
     
     # 根据模式设置不同的容器样式
     if mode == 'auto-fit':
@@ -422,7 +431,7 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
             overflow: hidden;
         '''
         inner_style = f'''
-            background: rgba(255, 255, 255, 0.95);
+            background: {card_inner_bg};
             border-radius: 20px;
             padding: 60px;
             height: calc({height}px - 100px);
@@ -444,8 +453,8 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
             position: relative;
             padding: 50px;
         '''
-        inner_style = '''
-            background: rgba(255, 255, 255, 0.95);
+        inner_style = f'''
+            background: {card_inner_bg};
             border-radius: 20px;
             padding: 60px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -462,7 +471,7 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
             overflow: hidden;
         '''
         inner_style = f'''
-            background: rgba(255, 255, 255, 0.95);
+            background: {card_inner_bg};
             border-radius: 20px;
             padding: 60px;
             min-height: calc({height}px - 100px);

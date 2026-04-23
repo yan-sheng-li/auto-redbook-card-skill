@@ -1,0 +1,105 @@
+/* assets/themes/cyberpunk.css */
+
+/* General body and text styles for content cards */
+.card-content {
+    color: #00F0FF; /* Bright cyan for general text */
+    font-size: 36px; /* 再次增大基础字体大小 */
+    line-height: 1.8; /* 调整行高以提高可读性 */
+}
+
+/* Headings */
+.card-content h1 { font-size: 2.2em; } /* Larger headings */
+.card-content h2 { font-size: 1.8em; }
+.card-content h3 { font-size: 1.5em; }
+.card-content h4 { font-size: 1.2em; }
+.card-content h5 { font-size: 1.1em; }
+.card-content h6 { font-size: 1.0em; }
+
+.card-content h1,
+.card-content h2,
+.card-content h3,
+.card-content h4,
+.card-content h5,
+.card-content h6 {
+    color: #B347D9; /* Purple for headings */
+    text-shadow: 0 0 8px rgba(179, 71, 217, 0.6);
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+/* Links */
+.card-content a {
+    color: #FF00E5; /* Magenta for links */
+    text-decoration: underline;
+}
+
+/* Code blocks */
+.card-content pre {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00F0FF;
+    color: #00FF00; /* Green for code text */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+}
+
+/* Inline code */
+.card-content code {
+    background-color: rgba(0, 240, 255, 0.2);
+    color: #00FF00;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+/* Blockquotes */
+.card-content blockquote {
+    border-left: 5px solid #FF00E5;
+    color: #FF00E5;
+    padding-left: 15px;
+    opacity: 0.8;
+}
+
+/* Lists */
+.card-content ul,
+.card-content ol {
+    color: #00F0FF;
+}
+
+/* Tables */
+.card-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.card-content th,
+.card-content td {
+    border: 1px solid #B347D9;
+    padding: 10px;
+    text-align: left;
+    color: #00F0FF;
+}
+
+.card-content th {
+    background-color: rgba(179, 71, 217, 0.3);
+    color: #B347D9;
+}
+
+/* Tags */
+.tags-container {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.tag {
+    background: linear-gradient(90deg, #00F0FF, #B347D9);
+    color: #0A0A1A; /* Dark text on bright tag */
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9em;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
