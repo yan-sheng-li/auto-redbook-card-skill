@@ -130,7 +130,7 @@ python scripts/render_xhs.py demos/content.md -t retro -m dynamic --width 1080 -
 
 | 参数 | 简写 | 说明 |
 |------|------|------|
-| `--theme` | `-t` | 主题：`default`、`playful-geometric`、`neo-brutalism`、`botanical`、`professional`、`retro`、`terminal`、`sketch` |
+| `--theme` | `-t` | 主题：`default`、`playful-geometric`、`neo-brutalism`、`botanical`、`professional`、`retro`、`terminal`、`sketch`、`cyberpunk` |
 | `--mode` | `-m` | 分页模式：`separator` / `auto-fit` / `auto-split` / `dynamic` |
 | `--width` | `-w` | 图片宽度（默认 1080） |
 | `--height` |  | 图片高度（默认 1440，`dynamic` 为最小高度） |
