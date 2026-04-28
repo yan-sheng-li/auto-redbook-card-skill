@@ -36,7 +36,16 @@
 
 ## ✨ 本次重构亮点
 
-- **🎨 8 套主题皮肤**：默认简约灰 + Playful Geometric / Neo-Brutalism / Botanical / Professional / Retro / Terminal / Sketch
+- **🎨 9 套主题皮肤**：默认简约灰
+  > Playful Geometric（趣味几何）
+  Neo-Brutalism（新粗野主义）
+  Botanical（植物主题）
+  Professional（专业风格）
+  Retro（复古风格）
+  Terminal（终端风格）
+  Sketch（手绘草图）
+  Cyberpunk（赛博朋克）
+
 - **📐 4 种分页模式**：
   - `separator`：按 `---` 分隔手动分页
   - `auto-fit`：固定尺寸，自动整体缩放内容，避免溢出/大面积留白
