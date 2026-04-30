@@ -44,7 +44,8 @@ const AVAILABLE_THEMES = [
     'professional',
     'retro',
     'terminal',
-    'sketch'
+    'sketch',
+    'cyberpunk'
 ];
 
 // 分页模式
@@ -169,13 +170,13 @@ function printHelp() {
  */
 function parseMarkdownFile(filePath) {
     const content = fs.readFileSync(filePath, 'utf-8');
-    
+
     // 解析 YAML 头部
     const yamlMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n/);
-    
+
     let metadata = {};
     let body = content;
-    
+
     if (yamlMatch) {
         try {
             metadata = yaml.parse(yamlMatch[1]) || {};
@@ -184,7 +185,7 @@ function parseMarkdownFile(filePath) {
         }
         body = content.slice(yamlMatch[0].length);
     }
-    
+
     return { metadata, body: body.trim() };
 }
 
@@ -218,13 +219,13 @@ function generateCoverHtml(metadata, theme, width, height) {
     const emoji = metadata.emoji || '📝';
     let title = metadata.title || '标题';
     let subtitle = metadata.subtitle || '';
-    
+
     if (title.length > 15) title = title.slice(0, 15);
     if (subtitle.length > 15) subtitle = subtitle.slice(0, 15);
-    
+
     const bg = THEME_BACKGROUNDS[theme] || THEME_BACKGROUNDS['default'];
     const titleBg = THEME_TITLE_GRADIENTS[theme] || THEME_TITLE_GRADIENTS['default'];
-    
+
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -313,9 +314,9 @@ function generateCardHtml(content, theme, pageNumber, totalPages, width, height,
     const themeCss = loadThemeCss(theme);
     const pageText = totalPages > 1 ? `${pageNumber}/${totalPages}` : '';
     const bg = THEME_BACKGROUNDS[theme] || THEME_BACKGROUNDS['default'];
-    
+
     let containerStyle, innerStyle, contentStyle;
-    
+
     if (mode === 'auto-fit') {
         containerStyle = `
             width: ${width}px;
@@ -372,7 +373,7 @@ function generateCardHtml(content, theme, pageNumber, totalPages, width, height,
         `;
         contentStyle = '';
     }
-    
+
     return `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -434,13 +435,13 @@ async function renderHtmlToImage(htmlContent, outputPath, width, height, mode, m
         viewport: { width, height: viewportHeight },
         deviceScaleFactor: dpr
     });
-    
+
     await page.setContent(htmlContent);
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
-    
+
     let actualHeight;
-    
+
     if (mode === 'auto-fit') {
         await page.evaluate(() => {
             const viewportContent = document.querySelector('.card-content');
@@ -484,13 +485,13 @@ async function renderHtmlToImage(htmlContent, outputPath, width, height, mode, m
         });
         actualHeight = Math.max(height, contentHeight);
     }
-    
+
     await page.screenshot({
         path: outputPath,
         clip: { x: 0, y: 0, width, height: actualHeight },
         type: 'png'
     });
-    
+
     await browser.close();
     console.log(`  ✅ 已生成: ${outputPath} (${width}x${actualHeight})`);
     return actualHeight;
@@ -501,26 +502,26 @@ async function renderHtmlToImage(htmlContent, outputPath, width, height, mode, m
  */
 async function renderMarkdownToCards(options) {
     const { markdownFile, outputDir, theme, mode, width, height, maxHeight, dpr } = options;
-    
+
     console.log(`\n🎨 开始渲染: ${markdownFile}`);
     console.log(`  📐 主题: ${theme}`);
     console.log(`  📏 模式: ${mode}`);
     console.log(`  📐 尺寸: ${width}x${height}`);
-    
+
     // 确保输出目录存在
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
     }
-    
+
     // 解析 Markdown 文件
     const { metadata, body } = parseMarkdownFile(markdownFile);
-    
+
     // 分割内容
     const cardContents = splitContentBySeparator(body);
     const totalCards = cardContents.length;
-    
+
     console.log(`  📄 检测到 ${totalCards} 张正文卡片`);
-    
+
     // 生成封面
     if (metadata.emoji || metadata.title) {
         console.log('  📷 生成封面...');
@@ -528,7 +529,7 @@ async function renderMarkdownToCards(options) {
         const coverPath = path.join(outputDir, 'cover.png');
         await renderHtmlToImage(coverHtml, coverPath, width, height, 'separator', maxHeight, dpr);
     }
-    
+
     // 生成正文卡片
     for (let i = 0; i < cardContents.length; i++) {
         const content = cardContents[i];
@@ -537,7 +538,7 @@ async function renderMarkdownToCards(options) {
         const cardPath = path.join(outputDir, `card_${i + 1}.png`);
         await renderHtmlToImage(cardHtml, cardPath, width, height, mode, maxHeight, dpr);
     }
-    
+
     console.log(`\n✨ 渲染完成！图片已保存到: ${outputDir}`);
 }
 
@@ -546,30 +547,30 @@ async function renderMarkdownToCards(options) {
  */
 async function main() {
     const options = parseArgs();
-    
+
     if (!options.markdownFile) {
         console.error('❌ 错误: 请提供 Markdown 文件路径');
         printHelp();
         process.exit(1);
     }
-    
+
     if (!fs.existsSync(options.markdownFile)) {
         console.error(`❌ 错误: 文件不存在 - ${options.markdownFile}`);
         process.exit(1);
     }
-    
+
     if (!AVAILABLE_THEMES.includes(options.theme)) {
         console.error(`❌ 错误: 不支持的主题 - ${options.theme}`);
         console.error(`可用主题: ${AVAILABLE_THEMES.join(', ')}`);
         process.exit(1);
     }
-    
+
     if (!PAGING_MODES.includes(options.mode)) {
         console.error(`❌ 错误: 不支持的分页模式 - ${options.mode}`);
         console.error(`可用模式: ${PAGING_MODES.join(', ')}`);
         process.exit(1);
     }
-    
+
     await renderMarkdownToCards(options);
 }
 

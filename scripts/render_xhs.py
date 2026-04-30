@@ -407,7 +407,7 @@ def generate_card_html(content: str, theme: str, page_number: int = 1,
         'retro': 'linear-gradient(135deg, #D35400 0%, #F39C12 100%)',
         'terminal': 'linear-gradient(135deg, #0D1117 0%, #161B22 100%)',
         'sketch': 'linear-gradient(135deg, #555555 0%, #888888 100%)',
-        'cyberpunk': 'linear-gradient(180deg, #0A0A1A 0%, #1A0A2E 50%, #0A0A1A 100%)'
+        'cyberpunk': 'linear-gradient(135deg, #0A0A12 0%, #12122A 100%)'
     }
     bg = theme_backgrounds.get(theme, theme_backgrounds['default'])
 
