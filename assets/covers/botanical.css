@@ -1,0 +1,39 @@
+/* ============================================
+   Cover - 植物园自然风格
+   ============================================ */
+
+.cover-container {
+  background: linear-gradient(180deg, #4A7C59 0%, #8FBC8F 100%);
+}
+
+.cover-inner {
+  background: #FFFFFF;
+  box-shadow: 0 20px 60px rgba(74, 124, 89, 0.2);
+}
+
+.cover-title {
+  background: linear-gradient(180deg, #1F2937 0%, #4A7C59 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cover-divider {
+  background: linear-gradient(90deg, #4A7C59, #8FBC8F);
+}
+
+.cover-subtitle {
+  color: #D1FAE5;
+}
+
+.deco-dot {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.deco-circle-1 {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.deco-circle-2 {
+  background: rgba(255, 255, 255, 0.03);
+}

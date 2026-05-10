@@ -1,0 +1,39 @@
+/* ============================================
+   Cover - 活泼几何风格
+   ============================================ */
+
+.cover-container {
+  background: linear-gradient(180deg, #8B5CF6 0%, #F472B6 100%);
+}
+
+.cover-inner {
+  background: #FFFFFF;
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.25);
+}
+
+.cover-title {
+  background: linear-gradient(180deg, #7C3AED 0%, #F472B6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cover-divider {
+  background: linear-gradient(90deg, #8B5CF6, #F472B6);
+}
+
+.cover-subtitle {
+  color: #A78BFA;
+}
+
+.deco-dot {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.deco-circle-1 {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.deco-circle-2 {
+  background: rgba(255, 255, 255, 0.04);
+}
