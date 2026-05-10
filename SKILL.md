@@ -75,7 +75,12 @@ python scripts/render_xhs.py content.md -m auto-fit
 
 # 指定输出目录
 python scripts/render_xhs.py content.md -o /path/your/dir
+
+# 使用封面图片（优先级高于 emoji）
+python scripts/render_xhs.py content.md --cover-image "https://example.com/cover.jpg"
 ```
+
+**封面显示逻辑**：优先使用 `--cover-image` 参数或 YAML 中的 `cover_image`/`image` 字段；若无图片则显示 emoji 作为备选方案。
 
 生成结果：`cover.png`（封面）+ `card_1.png`、`card_2.png`...（正文卡片）
 

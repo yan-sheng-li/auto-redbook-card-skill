@@ -17,6 +17,7 @@ python scripts/render_xhs.py <markdown_file> [options]
 | `--height` | | 图片高度（`dynamic` 下为最小高度） | `1440` |
 | `--max-height` | | `dynamic` 模式下的最大高度 | `4320` |
 | `--dpr` | | 设备像素比（清晰度） | `2` |
+| `--cover-image` | | 封面图片 URL（优先级高于 emoji） | `""` |
 
 ### 排版主题（`--theme`）
 
@@ -30,6 +31,7 @@ python scripts/render_xhs.py <markdown_file> [options]
 | `professional` | 专业商务 | 简洁商务蓝 |
 | `retro` | 复古怀旧 | 暖色复古感 |
 | `terminal` | 终端命令行 | 深色代码终端风格 |
+| `cyberpunk ` | 赛博朋克 | 色彩鲜艳未来 |
 
 ### 分页模式（`--mode`）
 
@@ -57,6 +59,9 @@ python scripts/render_xhs.py content.md -t playful-geometric -m auto-split
 
 # 自定义尺寸
 python scripts/render_xhs.py content.md -t retro -m dynamic --width 1080 --height 1440 --dpr 2
+
+# 使用封面图片
+python scripts/render_xhs.py content.md --cover-image "https://example.com/cover.jpg"
 ```
 
 ---
@@ -127,11 +132,14 @@ XHS_API_URL=http://localhost:5005
 
 ```yaml
 ---
-emoji: "🚀"           # 封面装饰 Emoji
+emoji: "🚀"           # 封面装饰 Emoji（无图片时显示）
 title: "大标题"        # 封面大标题（不超过 15 字）
 subtitle: "副标题文案"  # 封面副标题（不超过 15 字）
+cover_image: "https://example.com/cover.jpg"  # 封面图片 URL（优先级高于 emoji）
 ---
 ```
+
+> **封面显示逻辑**：优先使用 `cover_image` 或 `image` 字段；若无图片则显示 `emoji` 作为备选方案。
 
 ### 分页分隔符
 

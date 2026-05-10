@@ -86,10 +86,11 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
-        .cover-emoji {
-            font-size: 205px;
-            line-height: 1.2;
-            margin-bottom: 58px;
+        .cover-image {
+            width: 95%;
+            height: 40%;
+            object-fit: contain;
+            margin-bottom: 18px;
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
         }
 
@@ -142,7 +143,7 @@
             <div class="deco-dot"></div>
         </div>
         <div class="cover-inner">
-            <div class="cover-emoji">{{EMOJI}}</div>
+            <img class="cover-image" src="http://cdn.qiniu.liyansheng.top/img/20240721235742.png" alt="封面图片" />
             <div class="cover-title">{{TITLE}}</div>
             <div class="cover-divider"></div>
             <div class="cover-subtitle">{{SUBTITLE}}</div>

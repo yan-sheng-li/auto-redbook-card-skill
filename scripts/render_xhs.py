@@ -144,11 +144,12 @@ def load_theme_css(theme: str) -> str:
         return ""
 
 
-def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> str:
+def generate_cover_html(metadata: dict, theme: str, width: int, height: int, cover_image: Optional[str] = None) -> str:
     """生成封面 HTML - 重构版：更紧凑、更有视觉冲击力"""
     emoji = metadata.get('emoji', '📝')
     title = metadata.get('title', '标题')
     subtitle = metadata.get('subtitle', '')
+    image = cover_image or metadata.get('cover_image') or metadata.get('image', '')
     
     # 动态调整标题字体大小
     title_len = len(title)
@@ -228,6 +229,11 @@ def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> 
         subtitle_color = subtitle_colors.get(theme, '#8B949E')
     else:
         card_bg = '#FFFFFF'
+
+    if image:
+        image_html = f'<img class="cover-image" src="{image}" alt="封面图片" />'
+    else:
+        image_html = f'<div class="cover-emoji">{emoji}</div>'
 
     # 内部卡片尺寸更紧凑：95%×93%
     inner_w = int(width * 0.95)
@@ -342,6 +348,14 @@ def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> 
             padding: 0 {int(width * 0.02)}px;
         }}
 
+        .cover-image {{
+            width: 95%;
+            height: 40%;
+            object-fit: contain;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+        }}
+
         .cover-divider {{
             width: {int(width * 0.15)}px;
             height: 4px;
@@ -376,7 +390,7 @@ def generate_cover_html(metadata: dict, theme: str, width: int, height: int) -> 
             <div class="deco-dot"></div>
         </div>
         <div class="cover-inner">
-            <div class="cover-emoji">{emoji}</div>
+            {image_html}
             <div class="cover-title">{title}</div>
             <div class="cover-divider"></div>
             <div class="cover-subtitle">{subtitle}</div>
@@ -710,13 +724,14 @@ async def auto_split_content(body: str, theme: str, width: int, height: int,
     return cards
 
 
-async def render_markdown_to_cards(md_file: str, output_dir: str, 
+async def render_markdown_to_cards(md_file: str, output_dir: str,
                                    theme: str = 'default',
                                    mode: str = 'separator',
                                    width: int = DEFAULT_WIDTH,
                                    height: int = DEFAULT_HEIGHT,
                                    max_height: int = MAX_HEIGHT,
-                                   dpr: int = 2):
+                                   dpr: int = 2,
+                                   cover_image: str = ''):
     """主渲染函数：将 Markdown 文件渲染为多张卡片图片"""
     print(f"\n🎨 开始渲染: {md_file}")
     print(f"  📐 主题: {theme}")
@@ -742,9 +757,9 @@ async def render_markdown_to_cards(md_file: str, output_dir: str,
     print(f"  📄 检测到 {total_cards} 张正文卡片")
     
     # 生成封面
-    if metadata.get('emoji') or metadata.get('title'):
+    if metadata.get('emoji') or metadata.get('title') or cover_image:
         print("  📷 生成封面...")
-        cover_html = generate_cover_html(metadata, theme, width, height)
+        cover_html = generate_cover_html(metadata, theme, width, height, cover_image)
         cover_path = os.path.join(output_dir, 'cover.png')
         await render_html_to_image(cover_html, cover_path, width, height, 'separator', max_height, dpr)
     
@@ -827,6 +842,11 @@ def main():
         default=2,
         help='设备像素比（默认: 2）'
     )
+    parser.add_argument(
+        '--cover-image',
+        default='',
+        help='封面图片 URL，优先级高于 emoji'
+    )
     
     args = parser.parse_args()
     
@@ -842,7 +862,8 @@ def main():
         width=args.width,
         height=args.height,
         max_height=args.max_height,
-        dpr=args.dpr
+        dpr=args.dpr,
+        cover_image=args.cover_image
     ))
 
 
