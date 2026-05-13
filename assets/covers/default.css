@@ -1,0 +1,39 @@
+/* ============================================
+   Cover - 默认简约风格
+   ============================================ */
+
+.cover-container {
+  background: linear-gradient(180deg, #f3f3f3 0%, #f9f9f9 100%);
+}
+
+.cover-inner {
+  background: #FFFFFF;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.cover-title {
+  background: linear-gradient(180deg, #111827 0%, #4B5563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cover-divider {
+  background: #E5E7EB;
+}
+
+.cover-subtitle {
+  color: #6B7280;
+}
+
+.deco-circle-1 {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.deco-circle-2 {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.deco-dot {
+  background: rgba(255, 255, 255, 0.8);
+}

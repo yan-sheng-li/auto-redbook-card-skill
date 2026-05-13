@@ -2,6 +2,7 @@
 emoji: "🚀"
 title: "5个效率神器"
 subtitle: "让工作效率翻倍"
+cover_image: "http://cdn.qiniu.liyansheng.top/img/image-20260510020159260.png"
 ---
 
 # 神器一：Notion 📝

@@ -1,0 +1,39 @@
+/* ============================================
+   Cover - 专业商务风格
+   ============================================ */
+
+.cover-container {
+  background: linear-gradient(180deg, #2563EB 0%, #3B82F6 100%);
+}
+
+.cover-inner {
+  background: #FFFFFF;
+  box-shadow: 0 20px 60px rgba(37, 99, 235, 0.2);
+}
+
+.cover-title {
+  background: linear-gradient(180deg, #1E3A8A 0%, #2563EB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cover-divider {
+  background: linear-gradient(90deg, #1D4ED8, #3B82F6);
+}
+
+.cover-subtitle {
+  color: #93C5FD;
+}
+
+.deco-dot {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.deco-circle-1 {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.deco-circle-2 {
+  background: rgba(255, 255, 255, 0.04);
+}
