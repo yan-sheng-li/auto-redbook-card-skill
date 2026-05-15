@@ -92,7 +92,32 @@ python scripts/render_xhs.py content.md --cover-image "https://example.com/cover
 
 ---
 
-### 第四步：发布小红书笔记（可选）
+### 第四步：生成小红书笔记文案（自动生成）
+
+**渲染完成后自动创建** `note_posting.txt` 文件，包含：
+
+1. **3-5 个标题建议**（选一，不超过 20 字）
+2. **描述文案**（正文开头部分）
+3. **话题标签**（核心 + 扩展 + 风格标签）
+
+**文件位置**：与 Markdown 同目录，名称 `<markdown_filename>_posting.txt`
+
+**示例内容**：
+```
+标题建议（选一）：
+1. 终端 Git 可视化神器 Lazygit！🐙
+2. Git 不用背命令？Lazygit 来救你！
+3. 告别命令行，用 Lazygit 玩转 Git！
+
+描述文案：
+终端里的 Git 可视化客户端，让你告别繁琐命令行！无需离开终端，直接图形化操作 Git...
+
+#Lazygit #Git可视化 #终端工具 #程序员必备 #开发效率 #Git教程 #终端神器 #开发工具
+```
+
+---
+
+### 第五步：发布小红书笔记（可选）
 
 **前置条件**：配置好 `.env` 文件中的 `XHS_COOKIE`（详见 `references/params.md`）
 
@@ -116,6 +141,7 @@ python scripts/publish_xhs.py --title "笔记标题" --desc "笔记描述" \
 - `scripts/render_xhs.py` — 渲染脚本（主推，9 主题 + 4 分页模式）
 - `scripts/render_xhs_v2.py` — 渲染脚本 V2（备用，7 种渐变色彩风格）
 - `scripts/publish_xhs.py` — 发布脚本
+- `scripts/generate_posting.py` — 笔记文案生成脚本（自动创建标题、描述、标签）
 
 ### 模板与样式
 - `assets/cover.html` — 封面 HTML 模板
